@@ -8,6 +8,16 @@ SinglyLinkedList<T>::Node::Node(const T& data, int p) : data(data), priority(p),
 template <typename T>
 SinglyLinkedList<T>::SinglyLinkedList() : head(nullptr) {}
 
+// Destroyer
+template <typename T>
+SinglyLinkedList<T>::~SinglyLinkedList() {
+    while (head) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
+
 
 template <typename T>
 void SinglyLinkedList<T>::push(const T& data, int priority) {
@@ -29,4 +39,23 @@ void SinglyLinkedList<T>::push(const T& data, int priority) {
         newNode->next = current->next;
         current->next = newNode;
     }
+}
+
+
+template <typename T>
+bool SinglyLinkedList<T>::pull(T& data) {
+    if (isEmpty())
+        return false;
+
+    Node* temp = head;
+    data = temp->data;
+    head = head->next;
+    delete temp;
+    return true;
+}
+
+
+template <typename T>
+bool SinglyLinkedList<T>::isEmpty() const {
+    return head == nullptr;
 }
