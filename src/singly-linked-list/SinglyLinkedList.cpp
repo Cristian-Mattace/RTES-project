@@ -1,4 +1,7 @@
-#include <SinglyLinkedList.h>
+#ifndef SINGLYLINKEDLIST_CPP
+#define SINGLYLINKEDLIST_CPP
+
+#include "SinglyLinkedList.h"
 
 // Node constructor
 template <typename T>
@@ -59,3 +62,5 @@ template <typename T>
 bool SinglyLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }
+
+#endif

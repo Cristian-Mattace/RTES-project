@@ -1,3 +1,6 @@
+#ifndef SINGLYLINKEDLIST_H // checks if the identifier is not defined
+#define SINGLYLINKEDLIST_H // defines the identifier, indicating that the header content should be included
+
 #include <iostream>
 #include <stdexcept>
 
@@ -12,7 +15,7 @@ private:
         Node* next;
 
         // Node constructor
-        Node(const T& data, int p) : data(data), priority(p), next(nullptr) {}
+        Node(const T& data, int p);
     };
 
     Node* head;
@@ -46,3 +49,8 @@ public:
     bool isEmpty() const;
 
 };
+
+// It's important to remember to include
+#include "SinglyLinkedList.cpp"
+
+#endif // SINGLYLINKEDLIST_H closes the block and provides a comment to indicate what it's closing
