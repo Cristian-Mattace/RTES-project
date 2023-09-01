@@ -4,8 +4,8 @@
 ## Overview
 The `init(MODE)` function allows the selection of either static or dynamic priority mode.
 ### Mode
-- `Static Priority Mode`: in static mode, the system employs a doubly linked list. Elements within this list are arranged in ascending order of priority.
-- `Dynamic Priority Mode`: dynamic mode involves the utilization of groups, each identified by a static name assigned during group creation. These groups operate with dynamic priorities. Similarly to the static mode, the structure employed here is a doubly linked list, where elements are arranged in a _first-in-first-out_ (**FIFO**) manner. To manage the ordering of groups by priority, a separate doubly linked double-ended list is used.
+- `Static Priority Mode`: in static mode, the system employs a singly linked list. Elements within this list are arranged in ascending order of priority.
+- `Dynamic Priority Mode`: dynamic mode involves the utilization of groups, each identified by a static name assigned during group creation. These groups operate with dynamic priorities. Similarly to the static mode, the structure employed here is a singly linked list, where elements are arranged in a _first-in-first-out_ (**FIFO**) manner. To manage the ordering of groups by priority, a separate singly linked list is used. When groups are created, they are sorted by decreasing priority (the first group created will be the first, the second will be the second and so on).
 ![INIT](https://github.com/Cristian-Mattace/RTES-project/blob/main/resources/INIT.png)
 ### Functionality
 - `push(PRIORITY)`: this function is used in both static and dynamic modes. The function inserts an element into the appropriate list according to the mode in use.
