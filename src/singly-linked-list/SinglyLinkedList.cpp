@@ -3,64 +3,70 @@
 
 #include "SinglyLinkedList.h"
 
-// Node constructor
-template <typename T>
-SinglyLinkedList<T>::Node::Node(const T& data, int p) : data(data), priority(p), next(nullptr) {}
-
 // Constructor
 template <typename T>
-SinglyLinkedList<T>::SinglyLinkedList() : head(nullptr) {}
+SinglyLinkedList<T>::SinglyLinkedList() : head(nullptr), tail(nullptr) {}
 
 // Destroyer
 template <typename T>
 SinglyLinkedList<T>::~SinglyLinkedList() {
     while (head) {
-        Node* temp = head;
+        Node<T>* temp = head;
         head = head->next;
         delete temp;
     }
-}
 
+    tail = nullptr;
+}
 
 template <typename T>
-void SinglyLinkedList<T>::push(const T& data, int priority) {
-    Node* newNode = new Node(data, priority);
+void SinglyLinkedList<T>::push(const T& data) {
+    Node<T>* newNode = new Node<T>(data);
 
-    // if head not exists or my node priority is higher than node head priority
-    if (!head || priority > head->priority) {
-        newNode->next = head;
+    if (!head) {
+        newNode->next = nullptr;
         head = newNode;
     } 
-    else {
-        Node* current = head;
+    
+    if(tail)
+        tail->next = newNode;
 
-        // if next node exists and its priority is equal or higher than my node priority
-        while (current->next && priority <= current->next->priority)
-            current = current->next;
-        
-        // add my node in right position
-        newNode->next = current->next;
-        current->next = newNode;
-    }
+    tail = newNode;
 }
-
 
 template <typename T>
 bool SinglyLinkedList<T>::pull(T& data) {
     if (isEmpty())
         return false;
 
-    Node* temp = head;
+    Node<T>* temp = head;
     data = temp->data;
     head = head->next;
     delete temp;
+
     return true;
 }
-
 
 template <typename T>
 bool SinglyLinkedList<T>::isEmpty() const {
     return head == nullptr;
+}
+
+template <typename T>
+void SinglyLinkedList<T>::toString() {
+    if(isEmpty())
+        return;
+
+    Node<T>* current = this->head;
+    int i = 1;
+
+    std::cout << "SinglyLinkedList: {";
+    while (current->next){
+        std::cout << "(" << i++ << ") data=[" << current->data << "]";
+        current = current->next;
+    }
+
+    std::cout << "(" << i++ << ") data=[" << current->data << "]}";
 }
 
 #endif

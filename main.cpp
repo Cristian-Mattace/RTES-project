@@ -4,8 +4,8 @@
 int main() {
     SinglyLinkedList<int> list;
 
-    list.push(3, 3);
-    list.push(2, 1);
+    list.push(3);
+    list.push(2);
 
     int a = 0;
     list.pull(a);
