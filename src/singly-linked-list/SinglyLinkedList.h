@@ -3,22 +3,14 @@
 
 #include <iostream>
 #include <stdexcept>
+#include "node/Node.h"
 
 template <typename T>
 
 class SinglyLinkedList {
 private:
-    // Node inside singly linked list 
-    struct Node {
-        T data;
-        int priority;
-        Node* next;
-
-        // Node constructor
-        Node(const T& data, int p);
-    };
-
-    Node* head;
+    Node<T>* head;
+    Node<T>* tail;
 
 public:
     // Constructor
@@ -27,13 +19,11 @@ public:
     // Destroyer
     ~SinglyLinkedList();
 
-
     /**
-     * Add new value into list.
+     * Add new value at the end of the list.
      * @param data it's the value we want to insert.
-     * @param priority it's the element's priority.
     */
-    void push(const T& data, int priority);
+    void push(const T& data);
 
     /**
     * Remove the first data of the list.
@@ -48,6 +38,10 @@ public:
     */
     bool isEmpty() const;
 
+    /**
+    * List printing.
+    */
+    void toString();
 };
 
 // It's important to remember to include
