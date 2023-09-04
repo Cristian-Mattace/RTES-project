@@ -6,11 +6,11 @@
 
 // Constructor
 template <typename T>
-GroupLinkedList<T>::GroupLinkedList() : head(nullptr), tail(nullptr){}
+GroupsLinkedList<T>::GroupsLinkedList() : head(nullptr), tail(nullptr){}
 
 // Destroyer
 template <typename T>
-GroupLinkedList<T>::~GroupLinkedList() {
+GroupsLinkedList<T>::~GroupsLinkedList() {
     while (head) {
         GroupNode<SinglyLinkedList<T>>* temp = head;
         head = head->next;
@@ -21,7 +21,22 @@ GroupLinkedList<T>::~GroupLinkedList() {
 }
 
 template <typename T>
-void GroupLinkedList<T>::push(int idGroup) {
+void GroupsLinkedList<T>::push(const T& data, int idGroup) {
+    GroupNode<SinglyLinkedList<T>>* current = head;
+
+    while (current->next && current->idGroup != idGroup)
+        current = current->next;
+
+    if(isEmpty())
+      return;
+
+    current->data.push(data);
+
+    toString();
+}
+
+template <typename T>
+void GroupsLinkedList<T>::push(int idGroup) {
     GroupNode<SinglyLinkedList<T>>* newNode = new GroupNode<SinglyLinkedList<T>>(SinglyLinkedList<T>(), idGroup);
 
     if (!head) {
@@ -36,7 +51,7 @@ void GroupLinkedList<T>::push(int idGroup) {
 }
 
 template <typename T>
-bool GroupLinkedList<T>::pull(T& data) {
+bool GroupsLinkedList<T>::pull(T& data) {
     if (isEmpty()){
         std::cout << "The list is empty!" << std::endl;
         return false;
@@ -64,30 +79,60 @@ bool GroupLinkedList<T>::pull(T& data) {
     
 }
 
+template <typename T>
+bool GroupsLinkedList<T>::pull(T& data, int idGroup) {
+    if (isEmpty()){
+        std::cout << "The list is empty!" << std::endl;
+        return false;
+    }
+
+    GroupNode<SinglyLinkedList<T>>* current = this->head;
+    GroupNode<SinglyLinkedList<T>>* previuos = nullptr;
+
+    while (current->next && current->idGroup != idGroup){
+        previuos = current;
+        current = current->next;
+    }
+    
+    if(current->idGroup != idGroup){
+        std::cout << "IdGroup not found!" << std::endl;
+        return false;
+    }
+
+    if(previuos != nullptr)
+        previuos->next = current->next;
+
+    GroupNode<SinglyLinkedList<T>>* newNode = head;
+    head = current;
+    head->next = newNode;
+
+    pull(data);
+
+    return true;
+}
+
 
 template <typename T>
-bool GroupLinkedList<T>::isEmpty() const {
+bool GroupsLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }
 
 template <typename T>
-void GroupLinkedList<T>::toString() {
+void GroupsLinkedList<T>::toString() {
     if(isEmpty())
         return;
 
     GroupNode<SinglyLinkedList<T>>* current = this->head;
 
-    std::cout << "GroupLinkedList: ";
-    while (current->next){
+    std::cout << "GroupsLinkedList: ";
+    while (current){
         std::cout << "(" << current->idGroup << ") data=[";
         current->data.toString();
         std::cout << "]";
         current = current->next;
     }
 
-    std::cout << "(" << current->idGroup << ") data=[";
-    current->data.toString();
-    std::cout << "]" << std::endl;
+    std::cout << std::endl;
 }
 
 #endif

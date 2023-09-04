@@ -61,12 +61,12 @@ void SinglyLinkedList<T>::toString() {
     int i = 1;
 
     std::cout << "SinglyLinkedList: {";
-    while (current->next){
+    while (current){
         std::cout << "(" << i++ << ") data=[" << current->data << "]";
         current = current->next;
     }
 
-    std::cout << "(" << i++ << ") data=[" << current->data << "]}";
+    std::cout << "}";
 }
 
 #endif

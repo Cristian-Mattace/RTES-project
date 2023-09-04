@@ -7,17 +7,17 @@
 
 template <typename T>
 
-class GroupLinkedList {
+class GroupsLinkedList {
 private:
     GroupNode<SinglyLinkedList<T>>* head;
     GroupNode<SinglyLinkedList<T>>* tail;
 
 public:
     // Constructor
-    GroupLinkedList();
+    GroupsLinkedList();
 
     // Destroyer
-    ~GroupLinkedList();
+    ~GroupsLinkedList();
 
     /**
      * Add new group into list.
