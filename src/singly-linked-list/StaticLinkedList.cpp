@@ -19,23 +19,26 @@ StaticLinkedList<T>::~StaticLinkedList() {
 
 template <typename T>
 void StaticLinkedList<T>::push(const T& data, int priority) {
+    StaticNode<T>* current = this->head;
+    StaticNode<T>* previous = nullptr;
+
+    // Traverse the list to find the appropriate position to insert the new node
+    while (current && priority <= current->priority) {
+        previous = current;
+        current = current->next;
+    }
+
+    // Create the new node
     StaticNode<T>* newNode = new StaticNode<T>(data, priority);
 
-    // if head not exists or my node priority is higher than node head priority
-    if (!this->head || priority > this->head->priority) {
+    if (!previous) {
+        // Insert at the beginning of the list
         newNode->next = this->head;
         this->head = newNode;
-    } 
-    else {
-        StaticNode<T>* current = this->head;
-
-        // if next node exists and its priority is equal or higher than my node priority
-        while (current->next && priority <= current->priority)
-            current = current->next;
-        
-        // add my node in right position
-        newNode->next = current->next;
-        current->next = newNode;
+    } else {
+        // Insert after previous
+        newNode->next = previous->next;
+        previous->next = newNode;
     }
 }
 
@@ -65,12 +68,12 @@ void StaticLinkedList<T>::toString() {
     int i = 1;
 
     std::cout << "StaticLinkedList: {";
-    while (current->next){
+    while (current){
         std::cout << "(" << i++ << ") data=[" << current->data << "]";
         current = current->next;
     }
 
-    std::cout << "(" << i++ << ") data=[" << current->data << "]}" << std::endl;
+    std::cout << std::endl;
 }
 
 #endif
