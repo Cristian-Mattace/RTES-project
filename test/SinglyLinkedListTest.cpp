@@ -11,22 +11,26 @@ class SinglyLinkedListTest : public ::testing::Test {
 };
 
 TEST_F(SinglyLinkedListTest, IsQueueEmpty) {
+  EXPECT_TRUE(list.isEmpty());
+
   list.push(2);
   list.push(3);
 
-  int a = 0;
-  list.pull(a);
-  EXPECT_EQ(a, 2);
+  EXPECT_FALSE(list.isEmpty());
 }
 
-TEST_F(SinglyLinkedListTest, IsQueueEmpty2) {
+TEST_F(SinglyLinkedListTest, WorkingInFIFO) {
+  list.push(1);
   list.push(2);
   list.push(3);
-  list.push(4);
 
-  int a = 0;
-  list.pull(a);
-  EXPECT_EQ(a, 2);
+  int value = 0;
+  list.pull(value);
+  EXPECT_EQ(value, 1);
+  list.pull(value);
+  EXPECT_EQ(value, 2);
+  list.pull(value);
+  EXPECT_EQ(value, 3);
 }
 
 int main(int argc, char** argv) {
