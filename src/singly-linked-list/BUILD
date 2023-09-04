@@ -1,7 +1,6 @@
-# It contains the library target
 cc_library(
     name = "singly-linked-list",
-    srcs = ["SinglyLinkedList.cpp"],
-    hdrs = ["SinglyLinkedList.h"],
+    srcs = ["SinglyLinkedList.h"],
+    hdrs = ["SinglyLinkedList.cpp"],
     visibility = ["//visibility:public"],
 )

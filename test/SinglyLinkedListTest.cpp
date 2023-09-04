@@ -11,8 +11,8 @@ class SinglyLinkedListTest : public ::testing::Test {
 };
 
 TEST_F(SinglyLinkedListTest, IsQueueEmpty) {
-  list.push(2, 1);
-  list.push(3, 3);
+  list.push(2);
+  list.push(3);
 
   int a = 0;
   list.pull(a);
@@ -20,13 +20,13 @@ TEST_F(SinglyLinkedListTest, IsQueueEmpty) {
 }
 
 TEST_F(SinglyLinkedListTest, IsQueueEmpty2) {
-  list.push(2, 1);
-  list.push(3, 3);
-  list.push(4, 7);
+  list.push(2);
+  list.push(3);
+  list.push(4);
 
   int a = 0;
   list.pull(a);
-  EXPECT_EQ(a, 4);
+  EXPECT_EQ(a, 2);
 }
 
 int main(int argc, char** argv) {
