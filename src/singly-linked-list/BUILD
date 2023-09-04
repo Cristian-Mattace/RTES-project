@@ -4,3 +4,10 @@ cc_library(
     hdrs = ["SinglyLinkedList.cpp"],
     visibility = ["//visibility:public"],
 )
+
+cc_library(
+    name = "static-linked-list",
+    srcs = ["StaticLinkedList.h"],
+    hdrs = ["StaticLinkedList.cpp"],
+    visibility = ["//visibility:public"],
+)

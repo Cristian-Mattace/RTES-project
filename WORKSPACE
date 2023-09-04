@@ -1,4 +1,4 @@
-# The command to run a test => bazel test --cxxopt=-std=c++14 --test_output=all --verbose_failures --symlink_prefix=/ //test:singly_linked_list_test
+# The command to run all tests in the package => bazel test --cxxopt=-std=c++14 --symlink_prefix=/ //test/...
 # All the references about Bazel => https://google.github.io/googletest/quickstart-bazel.html
 # Use this command to clean => bazel clean --expunge
 
