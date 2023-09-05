@@ -11,3 +11,10 @@ cc_library(
     hdrs = ["StaticLinkedList.cpp"],
     visibility = ["//visibility:public"],
 )
+
+cc_library(
+    name = "groups-linked-list",
+    srcs = ["GroupsLinkedList.h"],
+    hdrs = ["GroupsLinkedList.cpp"],
+    visibility = ["//visibility:public"],
+)

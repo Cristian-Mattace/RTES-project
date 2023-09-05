@@ -1,63 +1,56 @@
 #include <iostream>
-#include "src/singly-linked-list/StaticLinkedList.h"
+#include "src/singly-linked-list/SinglyLinkedList.h"
+#include "src/singly-linked-list/GroupsLinkedList.h"
 
 int main() {
-    StaticLinkedList<int> list;
+    GroupsLinkedList<int> groupsList;
 
-    list.push(3, 3);
-    list.toString();
-    list.push(2, 2);
-    list.toString();
-    list.push(1, 1);
-    list.toString();
-    list.push(4, 4);
-    list.toString();
-    list.push(6, 6);
-    list.toString();
-    list.push(5, 5);
-    list.toString();
-    list.push(0, 0);
-    list.toString();
-    list.push(88, 5);
-    list.toString();
+    groupsList.push(1);
+    groupsList.push(11, 1);
+    groupsList.push(21, 1);
 
-    int a = 0;
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.push(2);
+    groupsList.push(12, 2);
+    groupsList.push(22, 2);
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.push(3);
+    groupsList.push(13, 3);
+    groupsList.push(23, 3);
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.push(4);
+    groupsList.push(14, 4);
+    groupsList.push(24, 4);
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    int value = 0;
+    groupsList.pull(value, 2);
+    std::cout << value << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.pull(value, 4);
+    std::cout << value << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.pull(value, 3);
+    std::cout << value << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.pull(value, 1);
+    std::cout << value << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.pull(value);
+    std::cout << value << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.pull(value);
+    std::cout << value << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.pull(value);
+    std::cout << value << std::endl;
 
-    list.pull(a);
-    std::cout << a << std::endl;
+    groupsList.pull(value);
+    std::cout << value << std::endl;
 
-    std::cout << list.isEmpty() << std::endl;
+    groupsList.pull(value);
+    std::cout << value << std::endl;
+
     return 0;
 }
