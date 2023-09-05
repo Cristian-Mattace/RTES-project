@@ -6,7 +6,7 @@
 
 // Constructor
 template <typename T>
-GroupsLinkedList<T>::GroupsLinkedList() : head(nullptr), tail(nullptr){}
+GroupsLinkedList<T>::GroupsLinkedList(bool verbose) : head(nullptr), tail(nullptr), isVerbose(verbose){}
 
 // Destroyer
 template <typename T>
@@ -32,7 +32,8 @@ void GroupsLinkedList<T>::push(const T& data, int idGroup) {
 
     current->data.push(data);
 
-    toString();
+    if(isVerbose)
+        toString();
 }
 
 template <typename T>
@@ -63,7 +64,8 @@ bool GroupsLinkedList<T>::pull(T& data) {
         if(!current->data.pull(data))
             current = current->next;
         else {
-            toString();
+            if(isVerbose)
+                toString();
             return true;
         }
     }
@@ -74,9 +76,10 @@ bool GroupsLinkedList<T>::pull(T& data) {
         return false;
     }
 
-    toString();
-    return true;
+    if(isVerbose)
+        toString();
     
+    return true;
 }
 
 template <typename T>

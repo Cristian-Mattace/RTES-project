@@ -12,10 +12,11 @@ class GroupsLinkedList {
 private:
     GroupNode<SinglyLinkedList<T>>* head;
     GroupNode<SinglyLinkedList<T>>* tail;
+    bool isVerbose;
 
 public:
     // Constructor
-    GroupsLinkedList();
+    GroupsLinkedList(bool verbose = false);
 
     // Destroyer
     ~GroupsLinkedList();
