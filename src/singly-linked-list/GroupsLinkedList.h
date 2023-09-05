@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 #include "node/Node.h"
+#include "SinglyLinkedList.h"
 
 template <typename T>
 
