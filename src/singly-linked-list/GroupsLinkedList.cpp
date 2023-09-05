@@ -114,6 +114,10 @@ bool GroupsLinkedList<T>::pull(T& data, int idGroup) {
     return true;
 }
 
+template <typename T>
+void GroupsLinkedList<T>::setVerbose(bool isVerbose) {
+    this->isVerbose = isVerbose;
+}
 
 template <typename T>
 bool GroupsLinkedList<T>::isEmpty() const {

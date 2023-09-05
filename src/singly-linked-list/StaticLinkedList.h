@@ -33,6 +33,11 @@ public:
     */
     bool pull(T& data);
 
+    /**
+    * Set isVerbose parameter
+    * @param isVerbose
+    */
+    void setVerbose(bool isVerbose);
 
     /**
     * @return It returns true if the list is empty.

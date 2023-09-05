@@ -62,6 +62,11 @@ bool StaticLinkedList<T>::pull(T& data) {
 }
 
 template <typename T>
+void StaticLinkedList<T>::setVerbose(bool isVerbose) {
+    this->isVerbose = isVerbose;
+}
+
+template <typename T>
 bool StaticLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }
