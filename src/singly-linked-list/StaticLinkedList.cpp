@@ -5,7 +5,7 @@
 
 // Constructor
 template <typename T>
-StaticLinkedList<T>::StaticLinkedList() : head(nullptr){}
+StaticLinkedList<T>::StaticLinkedList(bool verbose) : head(nullptr), isVerbose(verbose){}
 
 // Destroyer
 template <typename T>
@@ -40,6 +40,9 @@ void StaticLinkedList<T>::push(const T& data, int priority) {
         newNode->next = previous->next;
         previous->next = newNode;
     }
+
+    if(isVerbose)
+        toString();
 }
 
 template <typename T>
@@ -51,6 +54,10 @@ bool StaticLinkedList<T>::pull(T& data) {
     data = temp->data;
     head = head->next;
     delete temp;
+
+    if(isVerbose)
+        toString();
+
     return true;
 }
 

@@ -10,10 +10,11 @@ template <typename T>
 class StaticLinkedList {
 private:
     StaticNode<T>* head;
+    bool isVerbose;
 
 public:
     // Constructor
-    StaticLinkedList();
+    StaticLinkedList(bool verbose = false);
 
     // Destroyer
     ~StaticLinkedList();
