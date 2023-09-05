@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <semaphore.h>
 #include "singly-linked-list/StaticLinkedList.h"
 #include "singly-linked-list/GroupsLinkedList.h"
 
@@ -11,9 +12,17 @@ template <typename T, bool isStatic = true>
 class QueueLib {
 private:
     typename std::conditional<isStatic, StaticLinkedList<T>, GroupsLinkedList<T>>::type queue;
+    SinglyLinkedList<sem_t*> semList;
+    sem_t* turnstile;
+    sem_t* mutex;
+    int threadsWaiting = 0;
 
 public:
+    // Constructor 
     QueueLib(bool isVerbose = false);
+
+    // Destroyer
+    ~QueueLib();
 
     /**
     * Add new value into list if the parameter param was passed.

@@ -69,4 +69,9 @@ void SinglyLinkedList<T>::toString() {
     std::cout << "}";
 }
 
+template <typename T>
+T SinglyLinkedList<T>::getHead() {
+    return head->data;
+}
+
 #endif
