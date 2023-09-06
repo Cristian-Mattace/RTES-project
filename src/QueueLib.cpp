@@ -53,10 +53,7 @@ void QueueLib<T, isStatic>::push(const T& data, int param){
     sem_post(turnstile);
 
     sem_wait(mutex);
-    if(param == NULL_PARAM)
-        queue.push(data);
-    else
-        queue.push(data, param);
+    queue.push(data, param);
     sem_post(mutex);
 
     sem_wait(turnstile);
@@ -74,11 +71,20 @@ void QueueLib<T, isStatic>::push(const T& data, int param){
 }
 
 template <typename T, bool isStatic>
+void QueueLib<T, isStatic>::push(const T& idGroup){
+    static_assert(!isStatic, "This method can be used only for DYNAMIC MODE!");
+    queue.push(idGroup);
+}
+
+template <typename T, bool isStatic>
+bool QueueLib<T, isStatic>::pull(T& data){
+    return queue.pull(data);
+}
+
+template <typename T, bool isStatic>
 bool QueueLib<T, isStatic>::pull(T& data, int idGroup){
-    if(idGroup == NULL_PARAM)
-        return queue.pull(data);
-    else
-        return queue.pull(data, idGroup);
+    static_assert(!isStatic, "This method can be used only for DYNAMIC MODE!");
+    return queue.pull(data, idGroup);
 }
 
 template <typename T, bool isStatic>

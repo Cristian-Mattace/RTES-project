@@ -26,22 +26,33 @@ public:
 
     /**
     * Add new value into list if the parameter param was passed.
-    * If param = -1, then the push will create a new queue group because we are running in dynamic priority.
     * @param data it's the value we want to insert.
-    * @param param the parameter, which can be one of the following:
+    * @param priority the parameter, which can be one of the following:
     *   - static priority: it's the priority.
     *   - dynamic priority: insert into a specific dynamic list (idGroup).
     */
-    void push(const T& data, int param = -1);
+    void push(const T& data, int param);
 
     /**
-    * Remove the first data of the list (static priority) or, if idGroup = -1, then remove the first data of the first group (dynamic priority).
+    * Add new group into list (DYNAMIC PRIORITY).
+    * @param idGroup it's the group identifier we want to insert.
+    */
+    void push(const T& idGroup);
+
+    /**
+    * The pull will remove the first element of a specific dynamic group (idGroup) and and the specified group becomes the highest priority (DYNAMIC PRIORITY).
     * @param data it's the value we want to extract.
-    * @param idGroup the pull will remove the first element of a specific dynamic group (idGroup)
+    * @param idGroup the pull will remove the first element of a specific dynamic group (idGroup).
     * @return returns true if the method returned the first element of the list.
     */
-    bool pull(T& data, int idGroup = -1);
+    bool pull(T& data, int idGroup);
 
+    /**
+    * Remove the first data of the list (STATIC PRIORITY) or it removes the first data of the first group (DYNAMIC PRIORITY).
+    * @param data it's the value we want to extract.
+    * @return returns true if the method returned the first element of the list.
+    */
+    bool pull(T& data);
 
     /**
     * @return It returns true if the list is empty.
