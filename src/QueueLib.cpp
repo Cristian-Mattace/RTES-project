@@ -33,58 +33,56 @@ QueueLib<T, isStatic>::~QueueLib() {
 }
 
 template <typename T, bool isStatic>
-void QueueLib<T, isStatic>::push(const T& data, int param){
+void QueueLib<T, isStatic>::getMutex(int idThread){
+    std::cout << idThread << " -> I'm going to wait the TURNSTILE" << std::endl;
     sem_wait(turnstile);
-    std::cout << "I'm inside" << std::endl;
-    threadsWaiting++;
-    if(threadsWaiting > 1){
-        std::string semThreadName = "/semThread" + std::to_string(threadsWaiting);
-        sem_unlink(semThreadName.c_str()); // if already exists
-        sem_t* semThread = sem_open(semThreadName.c_str(), O_CREAT | O_EXCL, 0666, 1);
-        if(mutex == SEM_FAILED)
-            std::cout << "Error init of semaphore " << semThreadName << std::endl;
-        semList.push(semThread);
-        std::cout << "I'm going to wait" << std::endl;
-        sem_post(turnstile);
-        sem_wait(semList.getHead());
-        sem_wait(turnstile);
-        std::cout << "I'm awake" << std::endl;
-    }
-    sem_post(turnstile);
+    std::cout << idThread << " -> I'm inside" << std::endl;
 
     sem_wait(mutex);
-    queue.push(data, param);
+}
+
+template <typename T, bool isStatic>
+void QueueLib<T, isStatic>::releaseMutex(int idThread){
     sem_post(mutex);
 
-    sem_wait(turnstile);
-    threadsWaiting--;
-    if(threadsWaiting != 0){
-        sem_t* semThread;
-        semList.pull(semThread);
-        sem_post(semThread);
-        std::cout << "I woke up the first in line" << std::endl;
-        sem_close(semThread);
-        std::string semThreadName = "/semThread" + std::to_string(threadsWaiting);
-        sem_unlink(semThreadName.c_str()); // remove the semaphore
-    }
+    std::cout << idThread << " -> I'm going to release the TURNSTILE" << std::endl;
     sem_post(turnstile);
 }
 
 template <typename T, bool isStatic>
-void QueueLib<T, isStatic>::push(const T& idGroup){
+void QueueLib<T, isStatic>::push(const T& data, int param, int idThread){
+
+    getMutex(idThread);
+    queue.push(data, param);
+    releaseMutex(idThread);
+}
+
+template <typename T, bool isStatic>
+void QueueLib<T, isStatic>::push(const T& idGroup, int idThread){
     static_assert(!isStatic, "This method can be used only for DYNAMIC MODE!");
+
+    getMutex(idThread);
     queue.push(idGroup);
+    releaseMutex(idThread);
 }
 
 template <typename T, bool isStatic>
-bool QueueLib<T, isStatic>::pull(T& data){
-    return queue.pull(data);
+bool QueueLib<T, isStatic>::pull(T& data, int idThread){
+
+    getMutex(idThread);
+    bool result = queue.pull(data);
+    releaseMutex(idThread);
+    return result;
 }
 
 template <typename T, bool isStatic>
-bool QueueLib<T, isStatic>::pull(T& data, int idGroup){
+bool QueueLib<T, isStatic>::pull(T& data, int idGroup, int idThread){
     static_assert(!isStatic, "This method can be used only for DYNAMIC MODE!");
-    return queue.pull(data, idGroup);
+
+    getMutex(idThread);
+    bool result = queue.pull(data, idGroup);
+    releaseMutex(idThread);
+    return result;
 }
 
 template <typename T, bool isStatic>
