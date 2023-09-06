@@ -42,7 +42,7 @@ bool SinglyLinkedList<T>::pull(T& data) {
     Node<T>* temp = head;
     data = temp->data;
     head = head->next;
-    delete temp;
+    //delete temp;
 
     return true;
 }

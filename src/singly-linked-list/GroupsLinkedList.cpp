@@ -24,11 +24,18 @@ template <typename T>
 void GroupsLinkedList<T>::push(const T& data, int idGroup) {
     GroupNode<SinglyLinkedList<T>>* current = head;
 
+    //if there aren't group
+    if(isEmpty())
+      return;
+
     while (current->next && current->idGroup != idGroup)
         current = current->next;
 
-    if(isEmpty())
-      return;
+    //if the current group is not the group searched
+    if(current->idGroup != idGroup){
+        std::cout << "IdGroup not found!" << std::endl;
+        return;
+    }
 
     current->data.push(data);
 
@@ -75,7 +82,7 @@ bool GroupsLinkedList<T>::pull(T& data) {
         std::cout << "All groups are empty!" << std::endl;
         return false;
     }
-
+    
     if(isVerbose)
         toString();
     
