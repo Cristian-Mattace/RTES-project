@@ -11,13 +11,7 @@ GroupsLinkedList<T>::GroupsLinkedList(bool verbose) : head(nullptr), tail(nullpt
 // Destroyer
 template <typename T>
 GroupsLinkedList<T>::~GroupsLinkedList() {
-    while (head) {
-        GroupNode<SinglyLinkedList<T>>* temp = head;
-        head = head->next;
-        delete temp;
-    }
 
-    tail = nullptr;
 }
 
 template <typename T>
