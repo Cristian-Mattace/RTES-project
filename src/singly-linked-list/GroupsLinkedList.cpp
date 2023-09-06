@@ -11,7 +11,8 @@ GroupsLinkedList<T>::GroupsLinkedList(bool verbose) : head(nullptr), tail(nullpt
 // Destroyer
 template <typename T>
 GroupsLinkedList<T>::~GroupsLinkedList() {
-
+    head = nullptr;
+    tail = nullptr;
 }
 
 template <typename T>
