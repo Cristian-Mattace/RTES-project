@@ -47,9 +47,12 @@ void StaticLinkedList<T>::push(const T& data, int priority) {
 
 template <typename T>
 bool StaticLinkedList<T>::pull(T& data) {
-    if (isEmpty())
+    if (isEmpty()){
+        std::cout << "The list is empty!" << std::endl;
+        data = 0;
         return false;
-
+    }
+        
     StaticNode<T>* temp = head;
     data = temp->data;
     head = head->next;
