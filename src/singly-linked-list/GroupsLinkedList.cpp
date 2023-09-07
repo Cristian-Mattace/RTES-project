@@ -20,8 +20,11 @@ void GroupsLinkedList<T>::push(const T& data, int idGroup) {
     GroupNode<SinglyLinkedList<T>>* current = head;
 
     //if there aren't group
-    if(isEmpty())
-      return;
+    if(isEmpty()){
+        std::cout << "The list is empty!" << std::endl;
+        return;
+    }
+      
 
     while (current->next && current->idGroup != idGroup)
         current = current->next;
@@ -40,6 +43,17 @@ void GroupsLinkedList<T>::push(const T& data, int idGroup) {
 
 template <typename T>
 void GroupsLinkedList<T>::push(int idGroup) {
+
+    // Check if a group with the same ID already exists
+    GroupNode<SinglyLinkedList<T>>* current = head;
+    while (current) {
+        if (current->idGroup == idGroup) {
+            std::cout << "Group with ID " << idGroup << " already exists!" << std::endl;
+            return;
+        }
+        current = current->next;
+    }
+
     GroupNode<SinglyLinkedList<T>>* newNode = new GroupNode<SinglyLinkedList<T>>(SinglyLinkedList<T>(), idGroup);
 
     if (!head) {
