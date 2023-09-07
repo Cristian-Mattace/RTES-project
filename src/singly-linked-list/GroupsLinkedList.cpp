@@ -107,9 +107,18 @@ bool GroupsLinkedList<T>::pull(T& data, int idGroup) {
     if(previuos != nullptr)
         previuos->next = current->next;
 
-    GroupNode<SinglyLinkedList<T>>* newNode = head;
-    head = current;
-    head->next = newNode;
+    //If the head of the list corresponds to the current, nothing changes, otherwise you would have the recursion on the same node
+    if(current != head){
+        GroupNode<SinglyLinkedList<T>>* newNode = head;
+        head = current;
+        head->next = newNode;
+    }
+
+    //if the group is empty
+    if(current->data.isEmpty()){
+        std::cout << "Group empty!" << std::endl;
+        return false;
+    }
 
     pull(data);
 

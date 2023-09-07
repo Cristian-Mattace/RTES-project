@@ -36,8 +36,11 @@ void SinglyLinkedList<T>::push(const T& data) {
 
 template <typename T>
 bool SinglyLinkedList<T>::pull(T& data) {
-    if (isEmpty())
+    if (isEmpty()){
+        data = 0;
         return false;
+    }
+        
 
     Node<T>* temp = head;
     data = temp->data;

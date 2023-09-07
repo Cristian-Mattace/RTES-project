@@ -6,9 +6,18 @@ int main() {
     GroupsLinkedList<int> groupsList;
 
     int value = 0;
+
     groupsList.push(1);
+
+    groupsList.pull(value, 1);
+    std::cout << value << std::endl;
+    groupsList.pull(value);
+    std::cout << value << std::endl;
+
     groupsList.push(11, 1);
 
+    groupsList.pull(value);
+    std::cout << value << std::endl;
     groupsList.pull(value);
     std::cout << value << std::endl;
 
@@ -21,6 +30,9 @@ int main() {
     std::cout << value << std::endl;
 
     groupsList.push(22, 2);
+
+
+
 
     groupsList.pull(value);
     std::cout << value << std::endl;
