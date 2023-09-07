@@ -11,12 +11,7 @@ GroupsLinkedList<T>::GroupsLinkedList(bool verbose) : head(nullptr), tail(nullpt
 // Destroyer
 template <typename T>
 GroupsLinkedList<T>::~GroupsLinkedList() {
-    while (head) {
-        GroupNode<SinglyLinkedList<T>>* temp = head;
-        head = head->next;
-        delete temp;
-    }
-
+    head = nullptr;
     tail = nullptr;
 }
 
@@ -24,11 +19,21 @@ template <typename T>
 void GroupsLinkedList<T>::push(const T& data, int idGroup) {
     GroupNode<SinglyLinkedList<T>>* current = head;
 
+    //if there aren't group
+    if(isEmpty()){
+        std::cout << "The list is empty!" << std::endl;
+        return;
+    }
+      
+
     while (current->next && current->idGroup != idGroup)
         current = current->next;
 
-    if(isEmpty())
-      return;
+    //if the current group is not the group searched
+    if(current->idGroup != idGroup){
+        std::cout << "IdGroup not found!" << std::endl;
+        return;
+    }
 
     current->data.push(data);
 
@@ -38,6 +43,17 @@ void GroupsLinkedList<T>::push(const T& data, int idGroup) {
 
 template <typename T>
 void GroupsLinkedList<T>::push(int idGroup) {
+
+    // Check if a group with the same ID already exists
+    GroupNode<SinglyLinkedList<T>>* current = head;
+    while (current) {
+        if (current->idGroup == idGroup) {
+            std::cout << "Group with ID " << idGroup << " already exists!" << std::endl;
+            return;
+        }
+        current = current->next;
+    }
+
     GroupNode<SinglyLinkedList<T>>* newNode = new GroupNode<SinglyLinkedList<T>>(SinglyLinkedList<T>(), idGroup);
 
     if (!head) {
@@ -75,7 +91,7 @@ bool GroupsLinkedList<T>::pull(T& data) {
         std::cout << "All groups are empty!" << std::endl;
         return false;
     }
-
+    
     if(isVerbose)
         toString();
     
@@ -105,9 +121,18 @@ bool GroupsLinkedList<T>::pull(T& data, int idGroup) {
     if(previuos != nullptr)
         previuos->next = current->next;
 
-    GroupNode<SinglyLinkedList<T>>* newNode = head;
-    head = current;
-    head->next = newNode;
+    //If the head of the list corresponds to the current, nothing changes, otherwise you would have the recursion on the same node
+    if(current != head){
+        GroupNode<SinglyLinkedList<T>>* newNode = head;
+        head = current;
+        head->next = newNode;
+    }
+
+    //if the group is empty
+    if(current->data.isEmpty()){
+        std::cout << "Group empty!" << std::endl;
+        return false;
+    }
 
     pull(data);
 
