@@ -15,3 +15,9 @@ cc_test(
     srcs = ["GroupsLinkedListTest.cpp"],
     deps = ["@com_google_googletest//:gtest_main", "//src/singly-linked-list:singly-linked-list", "//src/singly-linked-list:groups-linked-list", "//src/singly-linked-list/node:node"],
 )
+
+cc_test(
+    name = "queue_lib_test",
+    srcs = ["QueueLibTest.cpp"],
+    deps = ["@com_google_googletest//:gtest_main", "//src:queue-lib"],
+)
