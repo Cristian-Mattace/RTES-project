@@ -25,9 +25,66 @@ The `QueueLib<T, MODE>` function allows the selection of either static or dynami
 In both functionalities, in all functions, there is a paramater (idThread) which indicates the specific thread that is using the queue.
 <br><br>
 
-
 For implementation details and usage examples, refer to the accompanying code documentation.
 
+### Thread safe
+Each method that modifies the queue (`pull()` and `push()`) are protected by a mutex (semaphore). In this way, only one thread at a time can make changes to the queue, avoiding conflicts.
+
+```
+Thread 1840230400 -> I'm inside
+StaticLinkedList: {(1) data=[1]}
+1840230400 -> I'm going to release the MUTEX
+
+1840803840 -> I'm inside
+StaticLinkedList: {(1) data=[2](2) data=[1]}
+1840803840 -> I'm going to release the MUTEX
+
+1841377280 -> I'm inside
+StaticLinkedList: {(1) data=[5](2) data=[2](3) data=[1]}
+1841377280 -> I'm going to release the MUTEX
+
+1840230400 -> I'm inside
+StaticLinkedList: {(1) data=[5](2) data=[3](3) data=[2](4) data=[1]}
+1840230400 -> I'm going to release the MUTEX
+
+1840803840 -> I'm inside
+StaticLinkedList: {(1) data=[5](2) data=[4](3) data=[3](4) data=[2](5) data=[1]}
+1840803840 -> I'm going to release the MUTEX
+
+1841377280 -> I'm inside
+StaticLinkedList: {(1) data=[6](2) data=[5](3) data=[4](4) data=[3](5) data=[2](6) data=[1]}
+1841377280 -> I'm going to release the MUTEX
+
+1840230400 -> I'm inside
+StaticLinkedList: {(1) data=[5](2) data=[4](3) data=[3](4) data=[2](5) data=[1]}
+1840230400 -> I'm going to release the MUTEX
+6
+
+1840803840 -> I'm inside
+StaticLinkedList: {(1) data=[4](2) data=[3](3) data=[2](4) data=[1]}
+1840803840 -> I'm going to release the MUTEX
+5
+
+1841377280 -> I'm inside
+StaticLinkedList: {(1) data=[3](2) data=[2](3) data=[1]}
+1841377280 -> I'm going to release the MUTEX
+4
+
+1840230400 -> I'm inside
+StaticLinkedList: {(1) data=[2](2) data=[1]}
+1840230400 -> I'm going to release the MUTEX
+3
+
+1840803840 -> I'm inside
+StaticLinkedList: {(1) data=[1]}
+1840803840 -> I'm going to release the MUTEX
+2
+
+1841377280 -> I'm inside
+StaticLinkedList: {}
+1841377280 -> I'm going to release the MUTEX
+1
+```
 ## Examples
 
 ### STATIC_MODE

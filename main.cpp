@@ -3,8 +3,8 @@
 #include <pthread.h>
 #include <cstdint> // to include type uintptr_t
 
-QueueLib<int, DYNAMIC_MODE> queue(true);
-//QueueLib<int, STATIC_MODE> queue(true);
+//QueueLib<int, DYNAMIC_MODE> queue(true);
+QueueLib<int, STATIC_MODE> queue(true);
 
 
 void* threadFunction1(void* arg) {
@@ -12,27 +12,10 @@ void* threadFunction1(void* arg) {
 
     std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
-    //test dynamic
-    queue.push(1, tid);
-    queue.push(11, 1, tid);
-    queue.push(12, 1, tid);
-
-    queue.push(2, tid);
-    queue.push(21, 2, tid);
-    queue.push(22, 2, tid);
-
-    queue.push(3, tid);
-    queue.push(31, 3, tid);
+    queue.push(1, 1, tid);
+    queue.push(3, 3, tid);
 
     int value = 0;
-    queue.pull(value, tid);
-    std::cout << value << std::endl;
-    queue.pull(value, 3, tid);
-    std::cout << value << std::endl;
-    queue.pull(value, tid);
-    std::cout << value << std::endl;
-    queue.pull(value, 1, tid);
-    std::cout << value << std::endl;
     queue.pull(value, tid);
     std::cout << value << std::endl;
     queue.pull(value, tid);
@@ -46,10 +29,12 @@ void* threadFunction2(void* arg) {
 
     std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
-    //test dynamic
-    // queue.push(2, tid);
-    queue.push(1, 2, tid);
+    queue.push(2, 2, tid);
+    queue.push(4, 4, tid);
+
     int value = 0;
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
     queue.pull(value, tid);
     std::cout << value << std::endl;
 
@@ -61,10 +46,12 @@ void* threadFunction3(void* arg) {
 
     std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
-    //test dynamic
-    // queue.push(3, tid);
-    queue.push(1, 3, tid);
+    queue.push(5, 5, tid);
+    queue.push(6, 6, tid);
+
     int value = 0;
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
     queue.pull(value, tid);
     std::cout << value << std::endl;
 
@@ -72,7 +59,7 @@ void* threadFunction3(void* arg) {
 }
 
 int main() {
-    const int num_threads = 1;
+    const int num_threads = 3;
     pthread_t threads[num_threads];
 
     int result = pthread_create(&threads[0], NULL, threadFunction1, NULL);
@@ -81,7 +68,7 @@ int main() {
         return 1;
     }
 
-    /*result = pthread_create(&threads[1], NULL, threadFunction2, NULL);
+    result = pthread_create(&threads[1], NULL, threadFunction2, NULL);
     if (result != 0) {
         std::cerr << "Threads creation error " << 1 << std::endl;
         return 1;
@@ -91,7 +78,7 @@ int main() {
     if (result != 0) {
         std::cerr << "Threads creation error " << 2 << std::endl;
         return 1;
-    }*/
+    }
 
     // wait threads termination
     for (int i = 0; i < num_threads; ++i) {
