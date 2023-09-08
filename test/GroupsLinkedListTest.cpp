@@ -67,6 +67,50 @@ TEST_F(GroupsLinkedListTest, Working) {
   EXPECT_EQ(value, 32);
 }
 
+TEST_F(GroupsLinkedListTest, PushToNonExistentGroup) {
+  list.push(1, 1);
+  EXPECT_TRUE(list.isEmpty());
+}
+
+TEST_F(GroupsLinkedListTest, PullToNonExistentGroup) {
+  list.push(1);
+  list.push(1, 1);
+
+  list.push(2);
+  list.push(1, 2);
+
+  int value = 0;
+  EXPECT_FALSE(list.pull(value, 3));
+  EXPECT_EQ(value, 0);
+}
+
+TEST_F(GroupsLinkedListTest, PullToEmptyGroup) {
+  list.push(1);
+  list.push(1, 1);
+  
+  int value = 0;
+  EXPECT_TRUE(list.pull(value, 1));
+  
+  EXPECT_FALSE(list.pull(value, 1));
+  EXPECT_EQ(value, 0);
+}
+
+TEST_F(GroupsLinkedListTest, PullToAllGroupsEmpty) {
+  list.push(1);
+  list.push(1, 1);
+
+  list.push(2);
+  list.push(1, 2);
+  
+  int value = 0;
+  EXPECT_TRUE(list.pull(value));
+
+  EXPECT_TRUE(list.pull(value));
+  
+  EXPECT_FALSE(list.pull(value));
+  EXPECT_EQ(value, 0);
+}
+
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
