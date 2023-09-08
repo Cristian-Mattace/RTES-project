@@ -70,15 +70,17 @@ void StaticLinkedList<T>::setVerbose(bool isVerbose) {
 }
 
 template <typename T>
+bool StaticLinkedList<T>::getVerbose() {
+    return isVerbose;
+}
+
+template <typename T>
 bool StaticLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }
 
 template <typename T>
 void StaticLinkedList<T>::toString() {
-    if(isEmpty())
-        return;
-
     StaticNode<T>* current = this->head;
     int i = 1;
 
@@ -88,7 +90,7 @@ void StaticLinkedList<T>::toString() {
         current = current->next;
     }
 
-    std::cout << std::endl;
+    std::cout << "}" << std::endl;
 }
 
 #endif

@@ -7,20 +7,16 @@
 #include "singly-linked-list/StaticLinkedList.h"
 #include "singly-linked-list/GroupsLinkedList.h"
 
+#define DYNAMIC_MODE false
+#define STATIC_MODE true
+
+
 template <typename T, bool isStatic = true>
 
 class QueueLib {
 private:
     typename std::conditional<isStatic, StaticLinkedList<T>, GroupsLinkedList<T>>::type queue;
-    sem_t* turnstile;
     sem_t* mutex;
-
-public:
-    // Constructor 
-    QueueLib(bool isVerbose = false);
-
-    // Destroyer
-    ~QueueLib();
 
     /**
     * Takes the mutex, if not available queues on the turnstile semaphore.
@@ -33,6 +29,13 @@ public:
     * @param idThread it's the thread ID.
     */
     void releaseMutex(int idThread);
+
+public:
+    // Constructor 
+    QueueLib(bool isVerbose = false);
+
+    // Destroyer
+    ~QueueLib();
 
     /**
     * Add new value into list if the parameter param was passed.

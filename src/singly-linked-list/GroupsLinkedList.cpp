@@ -131,6 +131,7 @@ bool GroupsLinkedList<T>::pull(T& data, int idGroup) {
     //if the group is empty
     if(current->data.isEmpty()){
         std::cout << "Group empty!" << std::endl;
+        data = 0;
         return false;
     }
 
@@ -145,18 +146,20 @@ void GroupsLinkedList<T>::setVerbose(bool isVerbose) {
 }
 
 template <typename T>
+bool GroupsLinkedList<T>::getVerbose() {
+    return isVerbose;
+}
+
+template <typename T>
 bool GroupsLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }
 
 template <typename T>
 void GroupsLinkedList<T>::toString() {
-    if(isEmpty())
-        return;
-
     GroupNode<SinglyLinkedList<T>>* current = this->head;
 
-    std::cout << "GroupsLinkedList: ";
+    std::cout << "GroupsLinkedList: {";
     while (current){
         std::cout << "(" << current->idGroup << ") data=[";
         current->data.toString();
@@ -164,7 +167,7 @@ void GroupsLinkedList<T>::toString() {
         current = current->next;
     }
 
-    std::cout << std::endl;
+    std::cout << "}" << std::endl;
 }
 
 #endif

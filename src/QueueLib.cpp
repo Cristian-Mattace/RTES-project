@@ -9,12 +9,6 @@ template <typename T, bool isStatic>
 QueueLib<T, isStatic>::QueueLib(bool isVerbose) {
     queue.setVerbose(isVerbose);
 
-    // semaphore turnstile initialization
-    sem_unlink("/turnstile"); // if already exists
-    turnstile = sem_open("/turnstile", O_CREAT | O_EXCL, 0666, 1);
-    if(turnstile == SEM_FAILED)
-        std::cout << "Error init of semaphore turnstile" << std::endl;
-
     // semaphore mutex initialization
     sem_unlink("/mutex"); // if already exists
     mutex = sem_open("/mutex", O_CREAT | O_EXCL, 0666, 1);
@@ -24,9 +18,6 @@ QueueLib<T, isStatic>::QueueLib(bool isVerbose) {
 
 template <typename T, bool isStatic>
 QueueLib<T, isStatic>::~QueueLib() {
-    // semaphore turnstile destruction
-    sem_close(turnstile);
-    sem_unlink("/turnstile"); // remove the semaphore
     // semaphore mutex destruction
     sem_close(mutex);
     sem_unlink("/mutex"); // remove the semaphore
@@ -34,19 +25,16 @@ QueueLib<T, isStatic>::~QueueLib() {
 
 template <typename T, bool isStatic>
 void QueueLib<T, isStatic>::getMutex(int idThread){
-    std::cout << idThread << " -> I'm going to wait the TURNSTILE" << std::endl;
-    sem_wait(turnstile);
-    std::cout << idThread << " -> I'm inside" << std::endl;
-
     sem_wait(mutex);
+    if(queue.getVerbose())
+        std::cout << idThread << " -> I'm inside" << std::endl;
 }
 
 template <typename T, bool isStatic>
 void QueueLib<T, isStatic>::releaseMutex(int idThread){
+    if(queue.getVerbose())
+        std::cout << idThread << " -> I'm going to release the MUTEX" << std::endl;
     sem_post(mutex);
-
-    std::cout << idThread << " -> I'm going to release the TURNSTILE" << std::endl;
-    sem_post(turnstile);
 }
 
 template <typename T, bool isStatic>

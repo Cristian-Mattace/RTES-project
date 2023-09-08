@@ -1,49 +1,58 @@
 #include <iostream>
 #include "src/QueueLib.h"
 #include <pthread.h>
+#include <cstdint> // to include type uintptr_t
 
-QueueLib<int, true> queue(true);
+//QueueLib<int, DYNAMIC_MODE> queue(true);
+QueueLib<int, STATIC_MODE> queue(true);
+
 
 void* threadFunction1(void* arg) {
-    pthread_t tid = pthread_self();
+    uintptr_t tid = (uintptr_t) pthread_self();
 
-    std::cout << "Thread " << tid << " in execution" << std::endl;
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
-    //test dynamic
-    //queue.push(1, 001);
-    queue.push(1, 1, 001);
+    queue.push(1, 1, tid);
+    queue.push(3, 3, tid);
+
     int value = 0;
-    queue.pull(value, 001);
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
     return NULL;
 }
 
 void* threadFunction2(void* arg) {
-    pthread_t tid = pthread_self();
+    uintptr_t tid = (uintptr_t) pthread_self();
 
-    std::cout << "Thread " << tid << " in execution" << std::endl;
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
-    //test dynamic
-    //queue.push(2, 002);
-    queue.push(1, 2, 002);
+    queue.push(2, 2, tid);
+    queue.push(4, 4, tid);
+
     int value = 0;
-    queue.pull(value, 002);
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
     return NULL;
 }
 
 void* threadFunction3(void* arg) {
-    pthread_t tid = pthread_self();
+    uintptr_t tid = (uintptr_t) pthread_self();
 
-    std::cout << "Thread " << tid << " in execution" << std::endl;
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
-    //test dynamic
-    //queue.push(3, 003);
-    queue.push(1, 3, 003);
+    queue.push(5, 5, tid);
+    queue.push(6, 6, tid);
+
     int value = 0;
-    queue.pull(value, 003);
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
     return NULL;
