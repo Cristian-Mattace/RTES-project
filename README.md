@@ -177,8 +177,18 @@ GroupsLinkedList: {(1) data=[SinglyLinkedList: {}](3) data=[SinglyLinkedList: {}
 
 GroupsLinkedList: {(1) data=[SinglyLinkedList: {}](3) data=[SinglyLinkedList: {}](2) data=[SinglyLinkedList: {}]}
 22
-
 ```
 
+## Branches description
+
+- `Main` [[link]](/Cristian-Mattace/RTES-project/): this branch contains the files needed to implement this library within a project.
+
+- `Pthread` [[link]](/Cristian-Mattace/RTES-project/tree/pthread): this branch contains all the files needed to run the library in thread safe mode.
+
+- `Bazel-test` [[link]](/Cristian-Mattace/RTES-project/tree/bazel-test): this branch contains all the files needed to run the library’s automated tests.
+
+- `Static-mode` [[link]](/Cristian-Mattace/RTES-project/tree/static-priority): this branch was used to create the static linked list.
+
+- `Dynamic-mode` [[link]](/Cristian-Mattace/RTES-project/tree/dynamic-priority): this branch was used to create the FIFO linked list and the groups linked list.
 
 
