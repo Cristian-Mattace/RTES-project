@@ -36,13 +36,16 @@ void SinglyLinkedList<T>::push(const T& data) {
 
 template <typename T>
 bool SinglyLinkedList<T>::pull(T& data) {
-    if (isEmpty())
+    if (isEmpty()){
+        data = 0;
         return false;
+    }
+        
 
     Node<T>* temp = head;
     data = temp->data;
     head = head->next;
-    delete temp;
+    //delete temp;
 
     return true;
 }
@@ -54,9 +57,6 @@ bool SinglyLinkedList<T>::isEmpty() const {
 
 template <typename T>
 void SinglyLinkedList<T>::toString() {
-    if(isEmpty())
-        return;
-
     Node<T>* current = this->head;
     int i = 1;
 
@@ -67,6 +67,11 @@ void SinglyLinkedList<T>::toString() {
     }
 
     std::cout << "}";
+}
+
+template <typename T>
+T SinglyLinkedList<T>::getHead() {
+    return head->data;
 }
 
 #endif

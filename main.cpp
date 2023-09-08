@@ -1,56 +1,91 @@
 #include <iostream>
-#include "src/singly-linked-list/SinglyLinkedList.h"
-#include "src/singly-linked-list/GroupsLinkedList.h"
+#include "src/QueueLib.h"
+#include <pthread.h>
+#include <cstdint> // to include type uintptr_t
 
-int main() {
-    GroupsLinkedList<int> groupsList;
+//QueueLib<int, DYNAMIC_MODE> queue(true);
+QueueLib<int, STATIC_MODE> queue(true);
 
-    groupsList.push(1);
-    groupsList.push(11, 1);
-    groupsList.push(21, 1);
 
-    groupsList.push(2);
-    groupsList.push(12, 2);
-    groupsList.push(22, 2);
+void* threadFunction1(void* arg) {
+    uintptr_t tid = (uintptr_t) pthread_self();
 
-    groupsList.push(3);
-    groupsList.push(13, 3);
-    groupsList.push(23, 3);
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
-    groupsList.push(4);
-    groupsList.push(14, 4);
-    groupsList.push(24, 4);
-
-    std::cout << std::endl;
-    std::cout << std::endl;
+    queue.push(1, 1, tid);
+    queue.push(3, 3, tid);
 
     int value = 0;
-    groupsList.pull(value, 2);
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
-    groupsList.pull(value, 4);
+    return NULL;
+}
+
+void* threadFunction2(void* arg) {
+    uintptr_t tid = (uintptr_t) pthread_self();
+
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
+
+    queue.push(2, 2, tid);
+    queue.push(4, 4, tid);
+
+    int value = 0;
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
-    groupsList.pull(value, 3);
+    return NULL;
+}
+
+void* threadFunction3(void* arg) {
+    uintptr_t tid = (uintptr_t) pthread_self();
+
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
+
+    queue.push(5, 5, tid);
+    queue.push(6, 6, tid);
+
+    int value = 0;
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
-    groupsList.pull(value, 1);
-    std::cout << value << std::endl;
+    return NULL;
+}
 
-    groupsList.pull(value);
-    std::cout << value << std::endl;
+int main() {
+    const int num_threads = 3;
+    pthread_t threads[num_threads];
 
-    groupsList.pull(value);
-    std::cout << value << std::endl;
+    int result = pthread_create(&threads[0], NULL, threadFunction1, NULL);
+    if (result != 0) {
+        std::cerr << "Threads creation error " << 0 << std::endl;
+        return 1;
+    }
 
-    groupsList.pull(value);
-    std::cout << value << std::endl;
+    result = pthread_create(&threads[1], NULL, threadFunction2, NULL);
+    if (result != 0) {
+        std::cerr << "Threads creation error " << 1 << std::endl;
+        return 1;
+    }
 
-    groupsList.pull(value);
-    std::cout << value << std::endl;
+    result = pthread_create(&threads[2], NULL, threadFunction3, NULL);
+    if (result != 0) {
+        std::cerr << "Threads creation error " << 2 << std::endl;
+        return 1;
+    }
 
-    groupsList.pull(value);
-    std::cout << value << std::endl;
+    // wait threads termination
+    for (int i = 0; i < num_threads; ++i) {
+        pthread_join(threads[i], NULL);
+    }
+
+    std::cout << "All threads terminated" << std::endl;
 
     return 0;
 }

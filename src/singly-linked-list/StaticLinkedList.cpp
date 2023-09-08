@@ -47,9 +47,12 @@ void StaticLinkedList<T>::push(const T& data, int priority) {
 
 template <typename T>
 bool StaticLinkedList<T>::pull(T& data) {
-    if (isEmpty())
+    if (isEmpty()){
+        std::cout << "The list is empty!" << std::endl;
+        data = 0;
         return false;
-
+    }
+        
     StaticNode<T>* temp = head;
     data = temp->data;
     head = head->next;
@@ -62,15 +65,22 @@ bool StaticLinkedList<T>::pull(T& data) {
 }
 
 template <typename T>
+void StaticLinkedList<T>::setVerbose(bool isVerbose) {
+    this->isVerbose = isVerbose;
+}
+
+template <typename T>
+bool StaticLinkedList<T>::getVerbose() {
+    return isVerbose;
+}
+
+template <typename T>
 bool StaticLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }
 
 template <typename T>
 void StaticLinkedList<T>::toString() {
-    if(isEmpty())
-        return;
-
     StaticNode<T>* current = this->head;
     int i = 1;
 
@@ -80,7 +90,7 @@ void StaticLinkedList<T>::toString() {
         current = current->next;
     }
 
-    std::cout << std::endl;
+    std::cout << "}" << std::endl;
 }
 
 #endif
