@@ -2,7 +2,7 @@
 #include "src/QueueLib.h"
 #include <pthread.h>
 
-QueueLib<int, true> queue(true);
+QueueLib<int, false> queue(true);
 
 void* threadFunction1(void* arg) {
     pthread_t tid = pthread_self();
@@ -10,7 +10,7 @@ void* threadFunction1(void* arg) {
     std::cout << "Thread " << tid << " in execution" << std::endl;
 
     //test dynamic
-    //queue.push(1, 001);
+    queue.push(1, 001);
     queue.push(1, 1, 001);
     int value = 0;
     queue.pull(value, 001);
@@ -25,7 +25,7 @@ void* threadFunction2(void* arg) {
     std::cout << "Thread " << tid << " in execution" << std::endl;
 
     //test dynamic
-    //queue.push(2, 002);
+    queue.push(2, 002);
     queue.push(1, 2, 002);
     int value = 0;
     queue.pull(value, 002);
@@ -40,7 +40,7 @@ void* threadFunction3(void* arg) {
     std::cout << "Thread " << tid << " in execution" << std::endl;
 
     //test dynamic
-    //queue.push(3, 003);
+    queue.push(3, 003);
     queue.push(1, 3, 003);
     int value = 0;
     queue.pull(value, 003);
