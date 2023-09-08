@@ -57,9 +57,6 @@ bool SinglyLinkedList<T>::isEmpty() const {
 
 template <typename T>
 void SinglyLinkedList<T>::toString() {
-    if(isEmpty())
-        return;
-
     Node<T>* current = this->head;
     int i = 1;
 

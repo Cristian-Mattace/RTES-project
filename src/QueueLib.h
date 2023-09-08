@@ -7,6 +7,10 @@
 #include "singly-linked-list/StaticLinkedList.h"
 #include "singly-linked-list/GroupsLinkedList.h"
 
+#define DYNAMIC_MODE false
+#define STATIC_MODE true
+
+
 template <typename T, bool isStatic = true>
 
 class QueueLib {

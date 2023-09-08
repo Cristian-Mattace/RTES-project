@@ -81,9 +81,6 @@ bool StaticLinkedList<T>::isEmpty() const {
 
 template <typename T>
 void StaticLinkedList<T>::toString() {
-    if(isEmpty())
-        return;
-
     StaticNode<T>* current = this->head;
     int i = 1;
 
@@ -93,7 +90,7 @@ void StaticLinkedList<T>::toString() {
         current = current->next;
     }
 
-    std::cout << std::endl;
+    std::cout << "}" << std::endl;
 }
 
 #endif

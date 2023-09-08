@@ -1,58 +1,78 @@
 #include <iostream>
 #include "src/QueueLib.h"
 #include <pthread.h>
+#include <cstdint> // to include type uintptr_t
 
-QueueLib<int, false> queue;
-//QueueLib<int, false> queue(true);
+QueueLib<int, DYNAMIC_MODE> queue(true);
+//QueueLib<int, STATIC_MODE> queue(true);
 
 
 void* threadFunction1(void* arg) {
-    pthread_t tid = pthread_self();
+    uintptr_t tid = (uintptr_t) pthread_self();
 
-    std::cout << "Thread " << tid << " in execution" << std::endl;
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
     //test dynamic
-    queue.push(1, 001);
-    queue.push(1, 1, 001);
+    queue.push(1, tid);
+    queue.push(11, 1, tid);
+    queue.push(12, 1, tid);
+
+    queue.push(2, tid);
+    queue.push(21, 2, tid);
+    queue.push(22, 2, tid);
+
+    queue.push(3, tid);
+    queue.push(31, 3, tid);
+
     int value = 0;
-    queue.pull(value, 001);
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, 3, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, 1, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
+    std::cout << value << std::endl;
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
     return NULL;
 }
 
 void* threadFunction2(void* arg) {
-    pthread_t tid = pthread_self();
+    uintptr_t tid = (uintptr_t) pthread_self();
 
-    std::cout << "Thread " << tid << " in execution" << std::endl;
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
     //test dynamic
-    queue.push(2, 002);
-    queue.push(1, 2, 002);
+    // queue.push(2, tid);
+    queue.push(1, 2, tid);
     int value = 0;
-    queue.pull(value, 002);
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
     return NULL;
 }
 
 void* threadFunction3(void* arg) {
-    pthread_t tid = pthread_self();
+    uintptr_t tid = (uintptr_t) pthread_self();
 
-    std::cout << "Thread " << tid << " in execution" << std::endl;
+    std::cout << "Thread " << (int)tid << " in execution" << std::endl;
 
     //test dynamic
-    queue.push(3, 003);
-    queue.push(1, 3, 003);
+    // queue.push(3, tid);
+    queue.push(1, 3, tid);
     int value = 0;
-    queue.pull(value, 003);
+    queue.pull(value, tid);
     std::cout << value << std::endl;
 
     return NULL;
 }
 
 int main() {
-    const int num_threads = 3;
+    const int num_threads = 1;
     pthread_t threads[num_threads];
 
     int result = pthread_create(&threads[0], NULL, threadFunction1, NULL);
@@ -61,7 +81,7 @@ int main() {
         return 1;
     }
 
-    result = pthread_create(&threads[1], NULL, threadFunction2, NULL);
+    /*result = pthread_create(&threads[1], NULL, threadFunction2, NULL);
     if (result != 0) {
         std::cerr << "Threads creation error " << 1 << std::endl;
         return 1;
@@ -71,7 +91,7 @@ int main() {
     if (result != 0) {
         std::cerr << "Threads creation error " << 2 << std::endl;
         return 1;
-    }
+    }*/
 
     // wait threads termination
     for (int i = 0; i < num_threads; ++i) {
