@@ -56,6 +56,12 @@ public:
     void setVerbose(bool isVerbose);
 
     /**
+    * Get isVerbose parameter
+    * @return isVerbose
+    */
+    bool getVerbose();
+
+    /**
     * @return It returns true if the list is empty.
     */
     bool isEmpty() const;

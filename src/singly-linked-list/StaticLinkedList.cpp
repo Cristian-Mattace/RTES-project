@@ -70,6 +70,11 @@ void StaticLinkedList<T>::setVerbose(bool isVerbose) {
 }
 
 template <typename T>
+bool StaticLinkedList<T>::getVerbose() {
+    return isVerbose;
+}
+
+template <typename T>
 bool StaticLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }

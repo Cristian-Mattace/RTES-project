@@ -26,12 +26,14 @@ QueueLib<T, isStatic>::~QueueLib() {
 template <typename T, bool isStatic>
 void QueueLib<T, isStatic>::getMutex(int idThread){
     sem_wait(mutex);
-    std::cout << idThread << " -> I'm inside" << std::endl;
+    if(queue.getVerbose())
+        std::cout << idThread << " -> I'm inside" << std::endl;
 }
 
 template <typename T, bool isStatic>
 void QueueLib<T, isStatic>::releaseMutex(int idThread){
-    std::cout << idThread << " -> I'm going to release the MUTEX" << std::endl;
+    if(queue.getVerbose())
+        std::cout << idThread << " -> I'm going to release the MUTEX" << std::endl;
     sem_post(mutex);
 }
 

@@ -33,7 +33,6 @@ public:
     // Destroyer
     ~QueueLib();
 
-
     /**
     * Add new value into list if the parameter param was passed.
     * @param data it's the value we want to insert.

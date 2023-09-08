@@ -145,6 +145,11 @@ void GroupsLinkedList<T>::setVerbose(bool isVerbose) {
 }
 
 template <typename T>
+bool GroupsLinkedList<T>::getVerbose() {
+    return isVerbose;
+}
+
+template <typename T>
 bool GroupsLinkedList<T>::isEmpty() const {
     return head == nullptr;
 }

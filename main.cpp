@@ -2,7 +2,9 @@
 #include "src/QueueLib.h"
 #include <pthread.h>
 
-QueueLib<int, false> queue(true);
+QueueLib<int, false> queue;
+//QueueLib<int, false> queue(true);
+
 
 void* threadFunction1(void* arg) {
     pthread_t tid = pthread_self();
