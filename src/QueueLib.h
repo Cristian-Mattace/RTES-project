@@ -16,10 +16,13 @@ template <typename T, bool isStatic = true>
 class QueueLib {
 private:
     typename std::conditional<isStatic, StaticLinkedList<T>, GroupsLinkedList<T>>::type queue;
+    sem_t* turnstile;
     sem_t* mutex;
+    SinglyLinkedList<sem_t*> semList;
+    int threadsWaiting = 0;
 
     /**
-    * Takes the mutex, if not available queues on the turnstile semaphore.
+    * If there are multiple threads waiting, queue on a specific semaphore, and when it is unlocked (in FIFO) it will make a WAIT on the mutex.
     * @param idThread it's the thread ID.
     */
     void getMutex(int idThread);
