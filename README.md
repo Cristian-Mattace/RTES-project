@@ -191,4 +191,11 @@ GroupsLinkedList: {(1) data=[SinglyLinkedList: {}](3) data=[SinglyLinkedList: {}
 
 - `Dynamic-mode` [[link]](https://github.com/Cristian-Mattace/RTES-project/tree/dynamic-priority): this branch was used to create the FIFO linked list and the groups linked list.
 
+## Releases description
+- `v1.0.0`: release for implementing this library in thread safe mode, without order.
+Obviously, when multiple threads are waiting to access the shared resource, they are waiting on the mutex semaphore.
+Once the semaphore POST is invoked, a random thread is awakened.
+
+- `v2.0.0`: Release for implementing this library in FIFO thread safe mode. When multiple threads are waiting to access the shared resource, they are waiting on a specific semaphore, one for each thread. A SinglyLinkedList to queue the semaphores that processes will suspend on in order of arrival. Once the shared resource is released, the thread at the head of the list will be woken up.
+
 
