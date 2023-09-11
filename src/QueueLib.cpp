@@ -49,28 +49,32 @@ void QueueLib<T, isStatic>::getMutex(int idThread){
     if(threadsWaiting > 1){
         std::string semThreadName = "/semThread" + std::to_string(threadsWaiting);
         sem_unlink(semThreadName.c_str()); // if already exists
-        sem_t* semThread = sem_open(semThreadName.c_str(), O_CREAT | O_EXCL, 0666, 1);
+        sem_t* semThread = sem_open(semThreadName.c_str(), O_CREAT | O_EXCL, 0666, 0);
 
         if(semThread == SEM_FAILED){
             std::cerr << idThread <<  " -> Error init of semaphore " << semThreadName << std::endl;
             exit(EXIT_FAILURE);
         }
         
+        // add semThread to singly linked list
         semList.push(semThread);
 
         if(queue.getVerbose())
             std::cout << idThread << " -> I'm going to wait" << std::endl;
         
+        // release the turnstile 
         sem_post(turnstile);
-        sem_wait(semList.getHead());
-        sem_wait(turnstile);
+        // wait on the semThread of this thread
+        sem_wait(semThread);
 
         if(queue.getVerbose())
             std::cout << idThread <<  " -> I'm awake" << std::endl;
     }
     
+    // release the turnstile (TOKEN PASSING)
     sem_post(turnstile);
-
+    
+    // get the mutex
     sem_wait(mutex);
     if(queue.getVerbose())
         std::cout << idThread << " -> I'm inside" << std::endl;
@@ -81,14 +85,17 @@ void QueueLib<T, isStatic>::releaseMutex(int idThread){
     if(queue.getVerbose())
         std::cout << idThread << " -> I'm going to release the MUTEX" << std::endl;
     
+    // release the mutex
     sem_post(mutex);
 
     sem_wait(turnstile);
     threadsWaiting--;
+    
     if(threadsWaiting > 0){
         sem_t* semThread;
         // semThread will be the head semaphore
         semList.pull(semThread);
+        // awake first thread in queue WITH the turnstile (TOKEN PASSING)
         sem_post(semThread);
 
         if(queue.getVerbose())
@@ -97,8 +104,8 @@ void QueueLib<T, isStatic>::releaseMutex(int idThread){
         sem_close(semThread);
         std::string semThreadName = "/semThread" + std::to_string(threadsWaiting);
         sem_unlink(semThreadName.c_str()); // remove the semaphore
-    }
-    sem_post(turnstile);
+    } else
+        sem_post(turnstile);
 }
 
 template <typename T, bool isStatic>
