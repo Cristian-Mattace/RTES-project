@@ -42,11 +42,6 @@ public:
     * List printing.
     */
     void toString();
-
-    /**
-    * @return It retuns the head element.
-    */
-    T getHead();
 };
 
 // It's important to remember to include
