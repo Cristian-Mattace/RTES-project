@@ -4,7 +4,7 @@
 ## Overview
 The `QueueLib<T, MODE>` function allows the selection of either static or dynamic priority mode.
 ### Mode
-- `STATIC_MODE`: in static mode, the system employs a singly linked list. Elements within this list are arranged in descending order of priority.
+- `STATIC_MODE`: in static mode, the system employs a singly linked list. Elements within this list are arranged in descending order of priority (1 - 99).
 
 - `DYNAMIC_MODE`: dynamic mode involves the utilization of groups, each identified by a static integer ID assigned during group creation. These groups operate with dynamic priorities. Similarly to the static mode, the structure employed here is a singly linked list, where elements are arranged in a _first-in-first-out_ (**FIFO**) manner. To manage the ordering of groups by priority, a separate singly linked list is used. When groups are created, they are sorted by decreasing priority (the first group created will be the first, the second will be the second and so on).
 ![INIT](https://github.com/Cristian-Mattace/RTES-project/blob/main/resources/INIT.png)
@@ -196,6 +196,6 @@ GroupsLinkedList: {(1) data=[SinglyLinkedList: {}](3) data=[SinglyLinkedList: {}
 Obviously, when multiple threads are waiting to access the shared resource, they are waiting on the mutex semaphore.
 Once the semaphore POST is invoked, a random thread is awakened.
 
-- `v2.0.0`: Release for implementing this library in FIFO thread safe mode. When multiple threads are waiting to access the shared resource, they are waiting on a specific semaphore, one for each thread. A SinglyLinkedList to queue the semaphores that processes will suspend on in order of arrival. Once the shared resource is released, the thread at the head of the list will be woken up.
+- `v2.0.0`: Release for implementing this library in FIFO thread safe mode. When multiple threads are waiting to access the shared resource, they are waiting on a specific semaphore, one for each thread. A SinglyLinkedList to queue the semaphores that processes will suspend on in order of arrival. Once the shared resource is released, the thread at the head of the list will be woken up with token passing.
 
 
