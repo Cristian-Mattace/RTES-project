@@ -7,7 +7,7 @@
 QueueLib<int, STATIC_MODE> queue(true);
 
 
-void* threadFunction1(void* arg) {
+void* threadFunction1(void*) {
     uintptr_t tid = (uintptr_t) pthread_self();
 
     std::cout << "Thread " << (int)tid << " in execution" << std::endl;
@@ -24,7 +24,7 @@ void* threadFunction1(void* arg) {
     return NULL;
 }
 
-void* threadFunction2(void* arg) {
+void* threadFunction2(void*) {
     uintptr_t tid = (uintptr_t) pthread_self();
 
     std::cout << "Thread " << (int)tid << " in execution" << std::endl;
@@ -41,7 +41,7 @@ void* threadFunction2(void* arg) {
     return NULL;
 }
 
-void* threadFunction3(void* arg) {
+void* threadFunction3(void*) {
     uintptr_t tid = (uintptr_t) pthread_self();
 
     std::cout << "Thread " << (int)tid << " in execution" << std::endl;

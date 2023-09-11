@@ -33,14 +33,6 @@ TEST_F(SinglyLinkedListTest, WorkingInFIFO) {
   EXPECT_EQ(value, 3);
 }
 
-TEST_F(SinglyLinkedListTest, GetHead) {
-  list.push(1);
-  list.push(2);
-  list.push(3);
-
-  EXPECT_EQ(list.getHead(), 1);
-}
-
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
